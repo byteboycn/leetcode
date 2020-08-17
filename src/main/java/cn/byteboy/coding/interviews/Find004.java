@@ -30,9 +30,31 @@ package cn.byteboy.coding.interviews;
  * 0 <= n <= 1000
  * 0 <= m <= 1000
  */
+
 public class Find004 {
 
+    /**
+     * 可以先从右上角开始扫描 (也可选左下角)
+     * 若比target大，则忽略那一列，扫描前一列
+     * 若比target小，则忽略那一行，扫描下一行
+     */
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
+        if (matrix.length == 0)
+            return false;
+        if (matrix[0].length == 0)
+            return false;
+        // 从右上角开始扫描
+        int x = matrix[0].length - 1;
+        int y = 0;
+        while (y < matrix.length && x >= 0) {
+            if (matrix[y][x] > target) {
+                x--;
+            } else if (matrix[y][x] < target) {
+                y++;
+            } else {
+                return true;
+            }
+        }
         return false;
     }
 }

@@ -1,9 +1,6 @@
 package cn.byteboy.coding.interviews;
 
-import cn.byteboy.coding.interviews.converter.IntArrayTypeConverter;
-import cn.byteboy.coding.interviews.converter.IntTypeConverter;
-import cn.byteboy.coding.interviews.converter.TypeConverter;
-import cn.byteboy.coding.interviews.converter.TypeConverterFactory;
+import cn.byteboy.coding.interviews.converter.*;
 import org.junit.Assert;
 
 import java.lang.reflect.Method;
@@ -34,6 +31,8 @@ public abstract class AbstractTest {
         // register type converter
         new IntArrayTypeConverter().register();
         new IntTypeConverter().register();
+        new Int2ArrayTypeConverter().register();
+        new BooleanTypeConverter().register();
     }
 
     /**
@@ -50,6 +49,9 @@ public abstract class AbstractTest {
      * verify all public method, all Object method exclusive
      */
     protected void verify() {
+        if (getObj() == null) {
+            throw new IllegalArgumentException("the test obj can not be null");
+        }
         Arrays.stream(getObj().getClass().getMethods())
                 .filter(m ->  !Arrays.asList(Object.class.getMethods()).contains(m))
                 .forEach(this::verify);
@@ -57,14 +59,22 @@ public abstract class AbstractTest {
 
     /**
      * verify specified method
-     *
-     * 目前只能验证只有一个参数的函数
      */
     protected void verify(Method method) {
+        if (getObj() == null) {
+            throw new IllegalArgumentException("the test obj can not be null");
+        }
         for (TestCase testCase : testCaseList) {
             try {
-                TypeConverter<?> inputConverter = TypeConverterFactory.getStrategy(method.getParameterTypes()[0]);
-                Object result = method.invoke(getObj(), inputConverter.convert(testCase.getInput()));
+                Class<?>[] parameterTypes = method.getParameterTypes();
+                Object[] parameterObjs = new Object[parameterTypes.length];
+                if (testCase.getInput().length != parameterTypes.length) {
+                    throw new IllegalArgumentException("the test case parameter error");
+                }
+                for (int i = 0; i < parameterTypes.length; i++) {
+                    parameterObjs[i] = TypeConverterFactory.getStrategy(parameterTypes[i]).convert(testCase.getInput()[i]);
+                }
+                Object result = method.invoke(getObj(), parameterObjs);
                 TypeConverter<?> expectedConverter = TypeConverterFactory.getStrategy(method.getReturnType());
                 Assert.assertEquals(result, expectedConverter.convert(testCase.getExpected()));
             } catch (Exception e) {

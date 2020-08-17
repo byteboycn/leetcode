@@ -11,12 +11,12 @@ public class TestCase {
 
     private String expected;
 
-    private String input;
+    private String[] input;
 
     public TestCase() {
     }
 
-    public TestCase(String expected, String input) {
+    public TestCase(String expected, String... input) {
         this.expected = expected;
         this.input = input;
     }
@@ -29,11 +29,11 @@ public class TestCase {
         this.expected = expected;
     }
 
-    public String getInput() {
+    public String[] getInput() {
         return input;
     }
 
-    public void setInput(String input) {
+    public void setInput(String[] input) {
         this.input = input;
     }
 }

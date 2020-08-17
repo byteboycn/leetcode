@@ -5,18 +5,20 @@ import cn.byteboy.coding.interviews.TestUtils;
 /**
  * @author Hong Shaochuan
  * @email xhhsc@outlook.com
- * @date 2020/8/16 21:43
+ * @date 2020/8/17 22:48
+ *
+ * 二维Int数组转换器
  */
-public class IntArrayTypeConverter implements TypeConverter<int[]> {
+public class Int2ArrayTypeConverter implements TypeConverter<int[][]> {
 
     @Override
-    public int[] convert(String input) {
-        return TestUtils.parse2IntArray(input);
+    public int[][] convert(String input) {
+        return TestUtils.parse2Int2Array(input);
     }
 
     @Override
-    public Class<int[]> getType() {
-        return int[].class;
+    public Class<int[][]> getType() {
+        return int[][].class;
     }
 
     @Override
