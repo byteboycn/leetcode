@@ -1,4 +1,4 @@
-package cn.byteboy.coding.interviews;
+package cn.byteboy.core;
 
 /**
  * @author Hong Shaochuan

@@ -1,5 +1,7 @@
 package cn.byteboy.coding.interviews;
 
+import cn.byteboy.core.AbstractTest;
+import cn.byteboy.core.TestCase;
 import org.junit.Test;
 
 /**
@@ -9,7 +11,6 @@ import org.junit.Test;
  */
 public class Find004Test extends AbstractTest {
 
-    private Find004 find004 = new Find004();
 
     @Test
     public void test() {
@@ -17,12 +18,12 @@ public class Find004Test extends AbstractTest {
     }
 
     @Override
-    Object getObj() {
-        return find004;
+    protected Object getObj() {
+        return new Find004();
     }
 
     @Override
-    void loadTestCase() {
+    protected void loadTestCase() {
         testCaseList.add(new TestCase("true", "[[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]]", "5"));
     }
 }

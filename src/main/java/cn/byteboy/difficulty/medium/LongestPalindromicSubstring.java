@@ -1,4 +1,4 @@
-package cn.byteboy.normal;
+package cn.byteboy.difficulty.medium;
 
 /**
  * @author Nature

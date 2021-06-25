@@ -1,4 +1,6 @@
-package cn.byteboy.hard;
+package cn.byteboy.difficulty.hard;
+
+import cn.byteboy.core.Solution;
 
 /**
  * @author Hong Shaochuan
@@ -26,6 +28,7 @@ public class TrappingRainWater {
     }
 
     // 按列求法 时间：O(n²) 空间：O(1)
+    @Solution
     public int trap(int[] height) {
         int ans = 0;
         for (int i = 1; i < height.length; i++) {
@@ -43,6 +46,7 @@ public class TrappingRainWater {
     }
 
     // 按列求法 时间：O(n) 空间 O(n)
+    @Solution
     public int trap1(int[] height) {
         int ans = 0;
         // 保存每列的左右两边的最高列 (不包含自身)
@@ -64,6 +68,7 @@ public class TrappingRainWater {
     }
 
     // 对trap1进一步优化 按列求法 时间：O(n) 空间 O(n)  省了部分空间
+    @Solution
     public int trap2(int[] height) {
         int ans = 0;
         // 保存每列的左右两边的最高列 (不包含自身)
@@ -90,6 +95,7 @@ public class TrappingRainWater {
     // 对trap2进一步优化 双指针法 时间：O(n) 空间 O(1)
     // 从左往右可以节省 max_left[]的空间，那从右往左遍历就可以节省 max_right[]的空间
     // 只要能设法可以既从左往右，又可以从右往左，就可以省掉空间
+    @Solution
     public int trap3(int[] height) {
         int ans = 0;
         int max_left = 0;

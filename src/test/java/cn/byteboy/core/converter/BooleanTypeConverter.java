@@ -1,25 +1,25 @@
-package cn.byteboy.coding.interviews.converter;
+package cn.byteboy.core.converter;
 
 import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Hong Shaochuan
  * @email xhhsc@outlook.com
- * @date 2020/8/16 21:44
+ * @date 2020/8/17 22:46
  */
-public class IntTypeConverter implements TypeConverter<Integer> {
+public class BooleanTypeConverter implements TypeConverter<Boolean> {
 
     @Override
-    public Integer convert(String input) {
+    public Boolean convert(String input) {
         if (StrUtil.isBlank(input)) {
             throw new IllegalArgumentException(input + " can not be blank");
         }
-        return Integer.parseInt(input);
+        return Boolean.parseBoolean(input);
     }
 
     @Override
-    public Class<Integer> getType() {
-        return int.class;
+    public Class<Boolean> getType() {
+        return Boolean.TYPE;
     }
 
     @Override

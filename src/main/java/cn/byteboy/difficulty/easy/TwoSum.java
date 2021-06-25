@@ -1,4 +1,4 @@
-package cn.byteboy.easy;
+package cn.byteboy.difficulty.easy;
 
 
 import java.util.HashMap;

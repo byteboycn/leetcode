@@ -1,4 +1,4 @@
-package cn.byteboy.normal;
+package cn.byteboy.difficulty.medium;
 
 import java.util.ArrayList;
 import java.util.List;

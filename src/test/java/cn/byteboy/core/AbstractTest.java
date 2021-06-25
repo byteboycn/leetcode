@@ -1,6 +1,6 @@
-package cn.byteboy.coding.interviews;
+package cn.byteboy.core;
 
-import cn.byteboy.coding.interviews.converter.*;
+import cn.byteboy.core.converter.*;
 import org.junit.Assert;
 
 import java.lang.reflect.Method;
@@ -38,12 +38,12 @@ public abstract class AbstractTest {
     /**
      * get the obj to be tested
      */
-    abstract Object getObj();
+    protected abstract Object getObj();
 
     /**
      * load test case
      */
-    abstract void loadTestCase();
+    protected abstract void loadTestCase();
 
     /**
      * verify all public method, all Object method exclusive
@@ -53,7 +53,7 @@ public abstract class AbstractTest {
             throw new IllegalArgumentException("the test obj can not be null");
         }
         Arrays.stream(getObj().getClass().getMethods())
-                .filter(m ->  !Arrays.asList(Object.class.getMethods()).contains(m))
+                .filter(m -> m.isAnnotationPresent(Solution.class))
                 .forEach(this::verify);
     }
 
@@ -80,7 +80,6 @@ public abstract class AbstractTest {
             } catch (Exception e) {
                 e.printStackTrace();
             } catch (AssertionError e) {
-                System.out.println(method.getName());
                 throw e;
             }
         }
