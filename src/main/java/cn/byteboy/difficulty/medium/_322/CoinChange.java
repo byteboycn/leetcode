@@ -2,6 +2,9 @@ package cn.byteboy.difficulty.medium._322;
 
 import cn.byteboy.core.Solution;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author hongshaochuan
  * @date 2021/6/26
@@ -43,9 +46,36 @@ import cn.byteboy.core.Solution;
  */
 public class CoinChange {
 
+    // key -> value : amount -> min coin count
+    private Map<Integer, Integer> dp = new HashMap<>();
+
     @Solution
     public int coinChange(int[] coins, int amount) {
 
-        return 0;
+        if (amount == 0) {
+            return 0;
+        }
+        if (amount < 0) {
+            return -1;
+        }
+        Integer r = dp.get(amount);
+        if (r != null)
+            return r;
+
+        int res = Integer.MAX_VALUE;
+        for (int coin : coins) {
+            int i = coinChange(coins, amount - coin);
+            if (i == -1)
+                continue;
+            res = Math.min(res, i + 1);
+        }
+        if (res == Integer.MAX_VALUE) {
+            res = -1;
+        }
+        dp.put(amount, res);
+        return res;
     }
+
+
+
 }

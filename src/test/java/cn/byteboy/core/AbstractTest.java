@@ -7,6 +7,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Hong Shaochuan
@@ -16,6 +20,9 @@ import java.util.List;
 public abstract class AbstractTest {
 
     protected List<TestCase> testCaseList;
+
+    // 3000ms
+    protected long timeLimit = 3000;
 
     protected TestCaseScanner testCaseScanner = new DefaultTestCaseScanner();
 
@@ -66,6 +73,7 @@ public abstract class AbstractTest {
         if (getObj() == null) {
             throw new IllegalArgumentException("the test obj can not be null");
         }
+        ExecutorService executor = Executors.newSingleThreadExecutor();
         for (TestCase testCase : testCaseList) {
             try {
                 Class<?>[] parameterTypes = method.getParameterTypes();
@@ -77,8 +85,16 @@ public abstract class AbstractTest {
                     parameterObjs[i] = TypeConverterFactory.getStrategy(parameterTypes[i]).convert(testCase.getInput()[i]);
                 }
                 Object result = method.invoke(getObj(), parameterObjs);
+//                executor.awaitTermination()
+                executor.submit(new Callable<Object>() {
+
+                    @Override
+                    public Object call() throws Exception {
+                        return null;
+                    }
+                });
                 TypeConverter<?> expectedConverter = TypeConverterFactory.getStrategy(method.getReturnType());
-                Assert.assertEquals(result, expectedConverter.convert(testCase.getExpected()));
+                Assert.assertEquals(expectedConverter.convert(testCase.getExpected()), result);
             } catch (Exception e) {
                 e.printStackTrace();
             } catch (AssertionError e) {
