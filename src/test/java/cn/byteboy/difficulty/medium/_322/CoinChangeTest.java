@@ -2,8 +2,13 @@ package cn.byteboy.difficulty.medium._322;
 
 import cn.byteboy.core.AbstractTest;
 import cn.byteboy.core.TestCase;
+import org.junit.Test;
 
-import java.lang.reflect.Method;
+import java.io.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,15 +18,20 @@ import java.util.List;
 public class CoinChangeTest extends AbstractTest {
 
 
+    @Test
+    public void test() {
+        verify();
+    }
+
 
 
     @Override
     protected Object getObj() {
-        return null;
+        return new CoinChange();
     }
 
     @Override
     protected void loadTestCase() {
-
+        super.testCaseList.addAll(testCaseScanner.read("TestCases/difficulty/medium/_322"));
     }
 }

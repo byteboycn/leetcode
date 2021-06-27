@@ -17,6 +17,8 @@ public abstract class AbstractTest {
 
     protected List<TestCase> testCaseList;
 
+    protected TestCaseScanner testCaseScanner = new DefaultTestCaseScanner();
+
     public AbstractTest() {
         this(null);
     }
