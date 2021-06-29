@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class TestUtils {
 
-    // String convert to int[]
+    // convert String to int[]
     public static int[] parse2IntArray(String str) {
         if (StrUtil.isNotBlank(str)) {
             if (str.startsWith("[") && str.endsWith("]")) {
@@ -36,13 +36,13 @@ public class TestUtils {
         }
     }
 
-    // String convert to int[][]
+    // convert String to int[][]
     public static int[][] parse2Int2Array(String str) {
         if (StrUtil.isNotBlank(str)) {
             if (str.startsWith("[") && str.endsWith("]")) {
 
                 str = str.substring(1, str.length() - 1);
-                Pattern pattern = Pattern.compile("(\\[[\\d,]+\\])");
+                Pattern pattern = Pattern.compile("(\\[[(\\+|\\-)?\\d,]+\\])");
                 Matcher matcher = pattern.matcher(str);
                 int count = 0;
                 while (matcher.find()) {

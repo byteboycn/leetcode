@@ -73,7 +73,6 @@ public abstract class AbstractTest {
         if (getObj() == null) {
             throw new IllegalArgumentException("the test obj can not be null");
         }
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         for (TestCase testCase : testCaseList) {
             try {
                 Class<?>[] parameterTypes = method.getParameterTypes();
@@ -85,14 +84,6 @@ public abstract class AbstractTest {
                     parameterObjs[i] = TypeConverterFactory.getStrategy(parameterTypes[i]).convert(testCase.getInput()[i]);
                 }
                 Object result = method.invoke(getObj(), parameterObjs);
-//                executor.awaitTermination()
-                executor.submit(new Callable<Object>() {
-
-                    @Override
-                    public Object call() throws Exception {
-                        return null;
-                    }
-                });
                 TypeConverter<?> expectedConverter = TypeConverterFactory.getStrategy(method.getReturnType());
                 Assert.assertEquals(expectedConverter.convert(testCase.getExpected()), result);
             } catch (Exception e) {
