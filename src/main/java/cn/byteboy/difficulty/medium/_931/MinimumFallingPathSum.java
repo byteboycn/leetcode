@@ -2,6 +2,8 @@ package cn.byteboy.difficulty.medium._931;
 
 import cn.byteboy.core.Solution;
 
+import java.util.Arrays;
+
 /**
  * @author hongshaochuan
  * @date 2021/6/29
@@ -59,8 +61,16 @@ import cn.byteboy.core.Solution;
  */
 public class MinimumFallingPathSum {
 
+    int[][] memo;
+
     @Solution
     public int minFallingPathSum(int[][] matrix) {
+
+        memo = new int[matrix.length][matrix.length];
+        for (int[] ints : memo) {
+            Arrays.fill(ints, Integer.MAX_VALUE);
+        }
+
         int res = Integer.MAX_VALUE;
         int lastLineIndex = matrix.length - 1;
         for (int i = 0; i < matrix[lastLineIndex].length; i++) {
@@ -76,14 +86,19 @@ public class MinimumFallingPathSum {
             // 返回Integer.MAX_VALUE会导致累加过程中数据溢出，所以只返回一个较大的值即可
             return Integer.MAX_VALUE / 2;
         }
+        if (memo[x][y] != Integer.MAX_VALUE) {
+            return memo[x][y];
+        }
+
         if (x == 0) {
             return matrix[x][y];
         }
-        return matrix[x][y] + min(
+        memo[x][y] = matrix[x][y] + min(
                 dp(matrix, x - 1, y),
                 dp(matrix, x - 1, y - 1),
                 dp(matrix, x - 1, y + 1)
         );
+        return memo[x][y];
     }
 
     private int min(int a, int b, int c) {
