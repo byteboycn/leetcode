@@ -42,6 +42,7 @@ public abstract class AbstractTest {
         new IntTypeConverter().register();
         new Int2ArrayTypeConverter().register();
         new BooleanTypeConverter().register();
+        new StringTypeConverter().register();
     }
 
     /**
