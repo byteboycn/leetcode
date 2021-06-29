@@ -1,8 +1,12 @@
 package cn.byteboy.difficulty.medium._931;
 
+import cn.byteboy.core.Solution;
+
 /**
  * @author hongshaochuan
  * @date 2021/6/29
+ *
+ * url: https://leetcode-cn.com/problems/minimum-falling-path-sum/
  *
  * 给你一个 n x n 的 方形 整数数组 matrix ，请你找出并返回通过 matrix 的下降路径 的 最小和 。
  *
@@ -55,8 +59,34 @@ package cn.byteboy.difficulty.medium._931;
  */
 public class MinimumFallingPathSum {
 
+    @Solution
     public int minFallingPathSum(int[][] matrix) {
+        int res = Integer.MAX_VALUE;
+        int lastLineIndex = matrix.length - 1;
+        for (int i = 0; i < matrix[lastLineIndex].length; i++) {
+            res = Math.min(res, dp(matrix, lastLineIndex, i));
+        }
+        return res;
+    }
 
-        return 0;
+    // dp表示从第0行某个位置到达x,y的最小路径和为 dp[matrix, x, y]
+    private int dp(int[][] matrix, int x, int y) {
+        // 边界检查
+        if (x < 0 || x >= matrix.length || y < 0 || y >= matrix[x].length) {
+            // 返回Integer.MAX_VALUE会导致累加过程中数据溢出，所以只返回一个较大的值即可
+            return Integer.MAX_VALUE / 2;
+        }
+        if (x == 0) {
+            return matrix[x][y];
+        }
+        return matrix[x][y] + min(
+                dp(matrix, x - 1, y),
+                dp(matrix, x - 1, y - 1),
+                dp(matrix, x - 1, y + 1)
+        );
+    }
+
+    private int min(int a, int b, int c) {
+        return Math.min(a, Math.min(b, c));
     }
 }
