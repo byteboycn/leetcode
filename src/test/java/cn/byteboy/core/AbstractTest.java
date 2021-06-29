@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author Hong Shaochuan
@@ -55,25 +56,53 @@ public abstract class AbstractTest {
      */
     protected abstract void loadTestCase();
 
+    protected ExecuteResult merge(ExecuteResult result1, ExecuteResult result2) {
+        if (result1 == null && result2 == null) {
+            return null;
+        }
+        if (result1 == null) {
+            return result2;
+        }
+        if (result2 == null) {
+            return result1;
+        }
+        for (ExecuteResult.MethodExecute method : result2.getMethods()) {
+            result1.add(method);
+        }
+        return result1;
+    }
+
     /**
-     * verify all public method, all Object method exclusive
+     * verify
      */
-    protected void verify() {
+    protected ExecuteResult verify() {
         if (getObj() == null) {
             throw new IllegalArgumentException("the test obj can not be null");
         }
-        Arrays.stream(getObj().getClass().getMethods())
+
+
+        List<Method> methods = Arrays.stream(getObj().getClass().getMethods())
                 .filter(m -> m.isAnnotationPresent(Solution.class))
-                .forEach(this::verify);
+                .collect(Collectors.toList());
+
+        ExecuteResult executeResult = null;
+
+        for (Method method : methods) {
+            executeResult = merge(executeResult, verify(method));
+        }
+
+        return executeResult;
     }
 
     /**
      * verify specified method
      */
-    protected void verify(Method method) {
+    protected ExecuteResult verify(Method method) {
         if (getObj() == null) {
             throw new IllegalArgumentException("the test obj can not be null");
         }
+        ExecuteResult executeResult = new ExecuteResult(testCaseList.size(), timeLimit);
+        long start = System.currentTimeMillis();
         for (TestCase testCase : testCaseList) {
             try {
                 Class<?>[] parameterTypes = method.getParameterTypes();
@@ -93,5 +122,9 @@ public abstract class AbstractTest {
                 throw e;
             }
         }
+        long end = System.currentTimeMillis();
+        executeResult.add(new ExecuteResult.MethodExecute(method, end - start));
+
+        return executeResult;
     }
 }

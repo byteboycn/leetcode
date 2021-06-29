@@ -11,7 +11,7 @@ public class LongestCommonSubsequenceTest extends AbstractTest {
 
     @Test
     public void test() {
-        verify();
+        System.out.println(verify());
     }
 
     @Override
