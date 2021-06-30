@@ -21,6 +21,6 @@ public class EditDistanceTest extends AbstractTest {
 
     @Override
     protected void loadTestCase() {
-        testCaseList.addAll(testCaseScanner.read(""));
+        testCaseList.addAll(testCaseScanner.read("TestCases/difficulty/hard/_72"));
     }
 }

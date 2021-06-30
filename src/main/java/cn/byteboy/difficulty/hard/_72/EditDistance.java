@@ -2,6 +2,8 @@ package cn.byteboy.difficulty.hard._72;
 
 import cn.byteboy.core.Solution;
 
+import java.util.Arrays;
+
 /**
  * @author hongshaochuan
  * @date 2021/6/30
@@ -55,9 +57,46 @@ import cn.byteboy.core.Solution;
  */
 public class EditDistance {
 
+    private String word1;
+
+    private String word2;
+
+    private int[][] memo;
+
     @Solution
     public int minDistance(String word1, String word2) {
+        this.word1 = word1;
+        this.word2 = word2;
 
-        return 0;
+        memo = new int[word1.length()][word2.length()];
+        for (int[] ints : memo) {
+            Arrays.fill(ints, -1);
+        }
+        return dp(word1.length() - 1, word2.length() - 1);
+    }
+
+    // word1[0, x] 和 word2[0, y]的最小编辑距离
+    private int dp(int x, int y) {
+        if (x == -1)
+            return y + 1;
+        if (y == -1)
+            return x + 1;
+
+        if (memo[x][y] != -1)
+            return memo[x][y];
+
+        if (word1.charAt(x) == word2.charAt(y))
+            memo[x][y] = dp(x - 1, y - 1);
+        else
+            memo[x][y] = min(
+                dp(x, y - 1) + 1,
+                dp(x - 1, y) + 1,
+                dp(x - 1, y - 1) + 1
+            );
+        return memo[x][y];
+    }
+
+    private int min(int a, int b, int c) {
+        return Math.min(a, Math.min(b, c));
     }
 }
