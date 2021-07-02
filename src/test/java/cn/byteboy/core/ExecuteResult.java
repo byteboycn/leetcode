@@ -70,6 +70,7 @@ public class ExecuteResult {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append(isSuccess() ? "success" : "failure").append("\n");
+        sb.append("test case count:").append(testCaseCount).append("\n");
         for (MethodExecute method : methods) {
             sb.append(method.getMethodName())
                     .append("-----").append(isSuccess() ? "success" : "failure").append("-----")
