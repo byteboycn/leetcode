@@ -2,6 +2,8 @@ package cn.byteboy.difficulty.hard._887;
 
 import cn.byteboy.core.Solution;
 
+import java.util.Arrays;
+
 /**
  * @author hongshaochuan
  * @Date 2021/7/5
@@ -57,8 +59,14 @@ import cn.byteboy.core.Solution;
  */
 public class SuperEggDrop {
 
+    private int[][] memo;
+
     @Solution
     public int superEggDrop(int k, int n) {
+        memo = new int[k + 1][n + 1];
+        for (int[] ints : memo) {
+            Arrays.fill(ints, -1);
+        }
         return dp(k, n);
     }
 
@@ -67,11 +75,52 @@ public class SuperEggDrop {
         // 如果只有一个鸡蛋，那么必须要从1楼尝试至n楼，最坏情况就时n次
         if (k == 1) return n;
         if (n == 0) return 0;
+        if (memo[k][n] != -1)
+            return memo[k][n];
         int res = Integer.MAX_VALUE;
         for (int i = 1; i < n + 1; i++) {
             res = Math.min(res, Math.max(dp(k, n - i), dp(k - 1, i - 1)) + 1);
         }
 
+        memo[k][n] = res;
         return res;
     }
+
+    @Solution
+    public int superEggDrop2(int k, int n) {
+        memo = new int[k + 1][n + 1];
+        for (int[] ints : memo) {
+            Arrays.fill(ints, -1);
+        }
+        return dp2(k, n);
+    }
+
+    private int dp2(int k, int n) {
+        if (k == 1) return n;
+        if (n == 0) return 0;
+
+        if (memo[k][n] != -1)
+            return memo[k][n];
+
+        int res = Integer.MAX_VALUE;
+        int lo = 1;
+        int hi = n;
+        int mid;
+        while (lo <= hi) {
+            mid = (lo + hi) / 2;
+            int broken = dp2(k - 1, mid - 1);
+            int notBroken = dp2(k, n - mid);
+            if (broken > notBroken) {
+                hi = mid - 1;
+                res = Math.min(res, broken + 1);
+            } else {
+                lo = mid + 1;
+                res = Math.min(res, notBroken + 1);
+            }
+        }
+
+        memo[k][n] = res;
+        return res;
+    }
+
 }
