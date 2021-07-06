@@ -82,13 +82,40 @@ public class RegularExpressionMatching {
     public boolean isMatch(String s, String p) {
         this.s = s;
         this.p = p;
-
-        return false;
+        return dp(0, 0);
     }
 
     private boolean dp(int x, int y) {
+        if (y == p.length())
+            return x == s.length();
+        if (x == s.length()) {
+            if ((p.length() - y) % 2 != 0)
+                return false;
+            for (; y + 1 < p.length(); y+=2) {
 
-        return false;
+                if (p.charAt(y + 1) != '*')
+                    return false;
+            }
+            return true;
+        }
+
+        if (s.charAt(x) == p.charAt(y) || p.charAt(y) == '.') {
+            if (y < p.length() - 1 && p.charAt(y + 1) == '*') {
+                // 匹配0次或多次
+                return dp(x, y + 2) || dp(x + 1, y);
+            } else {
+                // 常规匹配一次
+                return dp(x + 1, y + 1);
+            }
+        } else {
+            if (y < p.length() - 1 && p.charAt(y + 1) == '*') {
+                // 匹配0次
+                return dp(x, y + 2);
+            } else {
+                return false;
+            }
+        }
+
     }
 
 

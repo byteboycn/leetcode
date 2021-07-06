@@ -39,13 +39,19 @@ public class ExecuteResult {
 
         private long executeTime;
 
-        public MethodExecute(Method method, long executeTime) {
+        private final List<TestCaseResult> failureTestCaseList;
+
+        public MethodExecute(Method method) {
             this.method = method;
-            this.executeTime = executeTime;
+            this.failureTestCaseList = new ArrayList<>();
+        }
+
+        public void addFailureTestCase(TestCaseResult testCase) {
+            failureTestCaseList.add(testCase);
         }
 
         public boolean isSuccess() {
-            return failureCount == 0;
+            return failureTestCaseList.size() == 0;
         }
 
         public String getMethodName() {
@@ -54,6 +60,14 @@ public class ExecuteResult {
 
         public long getExecuteTime() {
             return executeTime;
+        }
+
+        public void setExecuteTime(long executeTime) {
+            this.executeTime = executeTime;
+        }
+
+        public List<TestCaseResult> getFailureTestCaseList() {
+            return failureTestCaseList;
         }
     }
 
@@ -76,7 +90,19 @@ public class ExecuteResult {
                     .append("-----").append(isSuccess() ? "success" : "failure").append("-----")
                     .append("cost:").append(method.getExecuteTime()).append("ms");
             sb.append("\n");
+            if (!method.isSuccess()) {
+                List<TestCaseResult> list = method.getFailureTestCaseList();
+                for (TestCaseResult testCase : list) {
+                    sb.append("--------------\n");
+                    for (String s : testCase.getTestCase().getInput()) {
+                        sb.append("parameter:").append(s).append("\n");
+                    }
+                    sb.append("Expected:").append(testCase.getTestCase().getExpected()).append("\n");
+                    sb.append("Actual:").append(testCase.getActual()).append("\n");
+                }
+            }
         }
+
         return sb.toString();
     }
 

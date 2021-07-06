@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -102,6 +103,7 @@ public abstract class AbstractTest {
             throw new IllegalArgumentException("the test obj can not be null");
         }
         ExecuteResult executeResult = new ExecuteResult(testCaseList.size(), timeLimit);
+        ExecuteResult.MethodExecute methodExecute = new ExecuteResult.MethodExecute(method);
         long start = System.currentTimeMillis();
         for (TestCase testCase : testCaseList) {
             try {
@@ -115,7 +117,11 @@ public abstract class AbstractTest {
                 }
                 Object result = method.invoke(getObj(), parameterObjs);
                 TypeConverter<?> expectedConverter = TypeConverterFactory.getStrategy(method.getReturnType());
-                Assert.assertEquals(expectedConverter.convert(testCase.getExpected()), result);
+
+                if (!Objects.equals(result, expectedConverter.convert(testCase.getExpected()))) {
+                    methodExecute.addFailureTestCase(new TestCaseResult(testCase, result));
+                }
+//                Assert.assertEquals(expectedConverter.convert(testCase.getExpected()), result);
             } catch (Exception e) {
                 e.printStackTrace();
             } catch (AssertionError e) {
@@ -123,7 +129,8 @@ public abstract class AbstractTest {
             }
         }
         long end = System.currentTimeMillis();
-        executeResult.add(new ExecuteResult.MethodExecute(method, end - start));
+        methodExecute.setExecuteTime(end - start);
+        executeResult.add(methodExecute);
 
         return executeResult;
     }
