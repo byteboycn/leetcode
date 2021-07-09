@@ -69,12 +69,13 @@ public class ImplementStrstr {
         if ("".equals(this.pat) && "".equals(this.txt))
             return 0;
         if ("".equals(this.pat))
-            return -1;
+            return 0;
 
         initKMP();
         return search();
     }
 
+    // 确定有限状态机
     private void initKMP() {
         dp = new int[pat.length()][256];
         dp[0][pat.charAt(0)] = 1;
