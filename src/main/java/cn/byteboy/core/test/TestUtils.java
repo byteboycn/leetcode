@@ -1,4 +1,4 @@
-package cn.byteboy.core;
+package cn.byteboy.core.test;
 
 import cn.hutool.core.util.StrUtil;
 

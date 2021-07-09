@@ -1,4 +1,4 @@
-package cn.byteboy.core;
+package cn.byteboy.core.test;
 
 import java.io.File;
 import java.util.List;

@@ -1,6 +1,6 @@
 package cn.byteboy.core.converter;
 
-import cn.byteboy.core.TestUtils;
+import cn.byteboy.core.test.TestUtils;
 
 /**
  * @author Hong Shaochuan

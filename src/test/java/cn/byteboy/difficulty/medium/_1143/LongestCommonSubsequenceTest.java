@@ -1,6 +1,6 @@
 package cn.byteboy.difficulty.medium._1143;
 
-import cn.byteboy.core.AbstractTest;
+import cn.byteboy.core.test.AbstractTest;
 import org.junit.Test;
 
 /**

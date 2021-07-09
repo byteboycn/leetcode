@@ -1,7 +1,7 @@
 package cn.byteboy.difficulty.medium._322;
 
-import cn.byteboy.core.AbstractTest;
-import cn.byteboy.core.TestCase;
+import cn.byteboy.core.test.AbstractTest;
+import cn.byteboy.core.test.TestCase;
 import org.junit.Test;
 
 import java.io.*;

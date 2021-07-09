@@ -1,5 +1,6 @@
-package cn.byteboy.core;
+package cn.byteboy.core.test;
 
+import cn.byteboy.core.Solution;
 import cn.byteboy.core.converter.*;
 import org.junit.Assert;
 

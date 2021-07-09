@@ -1,6 +1,6 @@
 package cn.byteboy.difficulty.easy._28;
 
-import cn.byteboy.core.AbstractTest;
+import cn.byteboy.core.test.AbstractTest;
 import org.junit.Test;
 
 /**
