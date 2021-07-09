@@ -13,7 +13,8 @@ public class TypeConverterFactory {
 
     private static final Map<Class<?>, TypeConverter<?>> strategyMap = new HashMap<>();
 
-    public static TypeConverter<?> getStrategy(Class<?> type) {
+    @SuppressWarnings("rawtypes")
+    public static TypeConverter getStrategy(Class<?> type) {
         return strategyMap.get(type);
     }
 

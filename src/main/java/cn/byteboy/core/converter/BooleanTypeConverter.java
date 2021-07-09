@@ -18,6 +18,11 @@ public class BooleanTypeConverter implements TypeConverter<Boolean> {
     }
 
     @Override
+    public String reverse(Boolean input) {
+        return input ? "true" : "false";
+    }
+
+    @Override
     public Class<Boolean> getType() {
         return Boolean.TYPE;
     }

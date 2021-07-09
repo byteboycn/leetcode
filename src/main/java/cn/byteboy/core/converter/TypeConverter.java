@@ -7,9 +7,12 @@ package cn.byteboy.core.converter;
  *
  * type converter
  * make input convert to type R
+ *
  */
 public interface TypeConverter<R> {
     R convert(String input);
+
+    String reverse(R input);
 
     Class<R> getType();
 

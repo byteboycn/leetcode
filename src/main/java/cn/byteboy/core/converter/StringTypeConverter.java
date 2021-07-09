@@ -50,6 +50,11 @@ public class StringTypeConverter implements TypeConverter<String> {
     }
 
     @Override
+    public String reverse(String input) {
+        return input == null ? "" : input;
+    }
+
+    @Override
     public Class<String> getType() {
         return String.class;
     }

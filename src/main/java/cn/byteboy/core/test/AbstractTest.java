@@ -41,11 +41,12 @@ public abstract class AbstractTest {
         }
         loadTestCase();
         // register type converter
-        new IntArrayTypeConverter().register();
+        IntArrayTypeConverter.INSTANCE.register();
         new IntTypeConverter().register();
         new Int2ArrayTypeConverter().register();
         new BooleanTypeConverter().register();
         new StringTypeConverter().register();
+        ListNodeTypeConverter.INSTANCE.register();
     }
 
     /**
@@ -117,10 +118,10 @@ public abstract class AbstractTest {
                     parameterObjs[i] = TypeConverterFactory.getStrategy(parameterTypes[i]).convert(testCase.getInput()[i]);
                 }
                 Object result = method.invoke(getObj(), parameterObjs);
-                TypeConverter<?> expectedConverter = TypeConverterFactory.getStrategy(method.getReturnType());
-
-                if (!Objects.equals(result, expectedConverter.convert(testCase.getExpected()))) {
-                    methodExecute.addFailureTestCase(new TestCaseResult(testCase, result));
+                TypeConverter expectedConverter = TypeConverterFactory.getStrategy(method.getReturnType());
+                String resultString = expectedConverter.reverse(result);
+                if (!Objects.equals(resultString, testCase.getExpected())) {
+                    methodExecute.addFailureTestCase(new TestCaseResult(testCase, resultString));
                 }
 //                Assert.assertEquals(expectedConverter.convert(testCase.getExpected()), result);
             } catch (Exception e) {

@@ -18,6 +18,11 @@ public class IntTypeConverter implements TypeConverter<Integer> {
     }
 
     @Override
+    public String reverse(Integer input) {
+        return String.valueOf(input);
+    }
+
+    @Override
     public Class<Integer> getType() {
         return int.class;
     }
