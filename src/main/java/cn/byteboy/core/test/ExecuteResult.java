@@ -97,8 +97,8 @@ public class ExecuteResult {
                     for (String s : testCase.getTestCase().getInput()) {
                         sb.append("parameter:").append(s).append("\n");
                     }
-                    sb.append("Expected:").append(testCase.getTestCase().getExpected()).append("\n");
-                    sb.append("Actual:").append(testCase.getActual()).append("\n");
+                    sb.append("Expected :").append(testCase.getTestCase().getExpected()).append("\n");
+                    sb.append("Actual   :").append(testCase.getActual()).append("\n");
                 }
             }
         }

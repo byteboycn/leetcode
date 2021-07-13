@@ -39,7 +39,7 @@ public class TreeNodeTypeConverter implements TypeConverter<TreeNode> {
         for (int i = 0; i < arr.length; i++) {
             curLevelCount++;
 
-            int offset = (int) Math.pow(2, curLevel) + (curLevelCount - 1) * 2;
+            int offset = (curLevelCount - 1) * 2 + ((int)Math.pow(2, curLevel) - curLevelCount) + 1;
             TreeNode cur = nodeList.get(i);
             if (cur != null) {
                 cur.left = i + offset > arr.length - 1 ? null : nodeList.get(i + offset);
