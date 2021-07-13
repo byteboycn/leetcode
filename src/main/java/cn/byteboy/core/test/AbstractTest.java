@@ -47,6 +47,7 @@ public abstract class AbstractTest {
         new BooleanTypeConverter().register();
         new StringTypeConverter().register();
         ListNodeTypeConverter.INSTANCE.register();
+        TreeNodeTypeConverter.INSTANCE.register();
     }
 
     /**

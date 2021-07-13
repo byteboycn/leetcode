@@ -12,6 +12,19 @@ import java.util.regex.Pattern;
  */
 public class TestUtils {
 
+    // convert String to String[]
+    public static String[] parse2StringArray(String str) {
+        if (StrUtil.isNotBlank(str)) {
+            if (str.startsWith("[") && str.endsWith("]")) {
+                return str.substring(1, str.length() - 1).split(",");
+            } else {
+                throw new IllegalArgumentException("str must be start with [ and end with ]");
+            }
+        } else {
+            throw new IllegalArgumentException("str not be blank");
+        }
+    }
+
     // convert String to int[]
     public static int[] parse2IntArray(String str) {
         if (StrUtil.isNotBlank(str)) {
