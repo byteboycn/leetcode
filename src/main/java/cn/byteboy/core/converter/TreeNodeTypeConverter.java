@@ -27,7 +27,7 @@ public class TreeNodeTypeConverter implements TypeConverter<TreeNode> {
         List<TreeNode> nodeList = new LinkedList<>();
 
         for (String s : arr) {
-            if (s.equalsIgnoreCase("null")) {
+            if (s.equalsIgnoreCase("null") || "".equals(s)) {
                 nodeList.add(null);
             } else {
                 nodeList.add(new TreeNode(Integer.parseInt(s)));
