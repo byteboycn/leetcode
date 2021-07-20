@@ -1,6 +1,7 @@
 package cn.byteboy.difficulty.medium._98;
 
 import cn.byteboy.core.Solution;
+import cn.byteboy.core.converter.TreeNodeTypeConverter;
 import cn.byteboy.core.model.TreeNode;
 
 /**
@@ -45,6 +46,18 @@ public class ValidateBinarySearchTree {
 
     @Solution
     public boolean isValidBST(TreeNode root) {
-        return true;
+        return isValidBST(root, null, null);
     }
+
+    // 以当前root节点为基准，与父节点比较 且满足 min < root < max
+    private boolean isValidBST(TreeNode root, TreeNode min, TreeNode max) {
+        if (root == null)
+            return true;
+        if (min != null && root.val <= min.val)
+            return false;
+        if (max != null && root.val >= max.val)
+            return false;
+        return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+    }
+
 }
