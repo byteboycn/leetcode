@@ -60,4 +60,29 @@ public class ValidateBinarySearchTree {
         return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
     }
 
+
+    boolean res = true;
+
+    long pre = Long.MIN_VALUE;
+
+    @Solution
+    public boolean isValidBST2(TreeNode root) {
+        traverse(root);
+        return res;
+    }
+
+    // 中序遍历
+    private void traverse(TreeNode root) {
+        if (root == null)
+            return;
+
+        traverse(root.left);
+
+        if (root.val <= pre)
+            res = false;
+        pre = root.val;
+
+        traverse(root.right);
+    }
+
 }
