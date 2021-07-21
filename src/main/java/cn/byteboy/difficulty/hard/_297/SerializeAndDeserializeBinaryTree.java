@@ -3,7 +3,10 @@ package cn.byteboy.difficulty.hard._297;
 import cn.byteboy.core.model.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * @author hongshaochuan
@@ -61,29 +64,50 @@ import java.util.List;
  */
 public class SerializeAndDeserializeBinaryTree {
 
-    private List<String> nodes = new ArrayList<>();
+    private final LinkedList<String> nodes = new LinkedList<>();
 
     // 前序遍历
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
+        nodes.clear();
         traverse(root);
-
-        return "";
-//        return sb.toString();
+        return String.join(",", nodes);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        return null;
+        LinkedList<String> nodes = new LinkedList<>(Arrays.asList(data.split(",")));
+        return rebuild(nodes);
+    }
+
+    private TreeNode rebuild(LinkedList<String> nodes) {
+        if (nodes.size() == 0)
+            return null;
+        String s = nodes.remove(0);
+        if ("#".equals(s)) {
+            return null;
+        }
+        TreeNode root = new TreeNode(Integer.parseInt(s));
+        root.left = rebuild(nodes);
+        root.right = rebuild(nodes);
+        return root;
     }
 
     private void traverse(TreeNode root) {
-        if (root == null)
+        if (root == null) {
             nodes.add("#");
-        else
-            nodes.add(String.valueOf(root.val));
+            return;
+        }
+
+        nodes.add(String.valueOf(root.val));
 
         traverse(root.left);
         traverse(root.right);
+    }
+
+    public static void main(String[] args) {
+        String s = "1,2,3";
+        TreeNode tree = new SerializeAndDeserializeBinaryTree().deserialize(s);
+        System.out.println(tree);
     }
 }
