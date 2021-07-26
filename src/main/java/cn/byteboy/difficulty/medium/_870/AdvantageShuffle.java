@@ -51,7 +51,7 @@ public class AdvantageShuffle {
         Arrays.sort(nums1);
 
         // 降序
-        PriorityQueue<int[]> maxQ = new PriorityQueue<>((o1, o2) -> o2[1] - o1[2]);
+        PriorityQueue<int[]> maxQ = new PriorityQueue<>((o1, o2) -> o2[1] - o1[1]);
         for (int i = 0; i < len; i++) {
             maxQ.offer(new int[]{i, nums2[i]});
         }
