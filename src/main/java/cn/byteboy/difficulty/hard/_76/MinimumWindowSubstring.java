@@ -67,9 +67,10 @@ public class MinimumWindowSubstring {
     public String minWindow(String s, String t) {
         int left = 0;
         int right = 0;
-        int valid = 0;
+        int valid = t.length(); // 还需要的字符总数量
         int start = 0;
         int minLen = Integer.MAX_VALUE;
+        // 在当前窗口中，对于某个字符k，还需要v个
         Map<Character, AtomicInteger> needs = new HashMap<>();
         for (int i = 0; i < t.length(); i++) {
             needs.computeIfAbsent(t.charAt(i), k -> new AtomicInteger()).incrementAndGet();
@@ -79,16 +80,10 @@ public class MinimumWindowSubstring {
             char c = s.charAt(right);
             right++;
             AtomicInteger counter = needs.get(c);
-            if (counter != null && counter.get() > 0) {
-                valid++;
-                counter.decrementAndGet();
-            }
-            System.out.println(s.substring(left, right));
-            if (s.substring(left, right).equals("DOBECODEBA")) {
-                System.out.println("fuck");
-            }
-            while (valid == t.length()) {
-//                System.out.printf("%d, %d, %d\n", left, right, minLen);
+            if (counter != null && counter.getAndDecrement() > 0)
+                valid--;
+
+            while (valid == 0) {
                 if (right - left < minLen) {
                     minLen = right - left;
                     start = left;
@@ -97,25 +92,14 @@ public class MinimumWindowSubstring {
                 char d = s.charAt(left);
                 left++;
                 AtomicInteger counter2 = needs.get(d);
-                if (counter2 != null && counter2.get() == 0) {
-                    valid--;
-                    counter2.incrementAndGet();
-//                    if (valid < 0) {
-//                        System.out.println("fuck");
-//                    }
-                }
+                if (counter2 != null && counter2.incrementAndGet() > 0)
+                    valid++;
 
             }
 
         }
 
         return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
-    }
-
-
-    public static void main(String[] args) {
-        MinimumWindowSubstring obj = new MinimumWindowSubstring();
-        System.out.println(obj.minWindow("ADOBECODEBANC", "ABC"));
     }
 
 
