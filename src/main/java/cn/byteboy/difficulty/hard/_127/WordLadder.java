@@ -131,13 +131,4 @@ public class WordLadder {
         }
         return 0;
     }
-
-    public static void main(String[] args) {
-        List<String> arr = Arrays.asList("hot","dot","dog","lot","log","cog");
-        String beginWord = "hit";
-        String endWord = "cog";
-
-        WordLadder w = new WordLadder();
-        System.out.println(w.ladderLength2(beginWord, endWord, arr));
-    }
 }
