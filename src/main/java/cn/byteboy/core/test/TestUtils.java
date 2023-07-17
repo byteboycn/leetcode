@@ -2,8 +2,10 @@ package cn.byteboy.core.test;
 
 import cn.hutool.core.util.StrUtil;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author Hong Shaochuan
@@ -80,6 +82,17 @@ public class TestUtils {
         } else {
             throw new IllegalArgumentException("str not be blank");
         }
+    }
+
+    public static String parseArray2String(Object[] arr) {
+        return Arrays.toString(arr);
+    }
+
+    public static String parseArray2String(int[] arr) {
+        return Arrays.stream(arr)
+                .boxed()
+                .map(String::valueOf)
+                .collect(Collectors.joining(",", "[", "]"));
     }
 
 }
